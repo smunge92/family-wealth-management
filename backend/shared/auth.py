@@ -18,32 +18,13 @@ logger = logging.getLogger(__name__)
 
 def get_cors_headers():
     """
-    Get CORS and security headers for responses.
+    Get security headers for responses.
 
-    Includes:
-    - CORS headers for cross-origin requests
-    - Security headers to prevent common attacks (XSS, clickjacking, MIME sniffing)
-    - HSTS for HTTPS enforcement
+    CORS is handled at the Azure Functions platform level (Function App > API > CORS),
+    NOT in code. Setting CORS_ALLOWED_ORIGINS as an environment variable crashes the
+    Azure Functions .NET host. Only security headers are set here.
     """
-    # Get allowed origins - validate it's not a wildcard in production
-    allowed_origins = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000")
-
-    # Security: Warn about insecure CORS configurations in production
-    is_production = os.getenv("REQUIRE_AUTH", "true").lower() == "true"
-    if allowed_origins == "*":
-        logger.warning("CORS_ALLOWED_ORIGINS is set to '*' - this is insecure in production!")
-    elif is_production and ("localhost" in allowed_origins or "127.0.0.1" in allowed_origins):
-        logger.warning(
-            f"CORS_ALLOWED_ORIGINS contains localhost ({allowed_origins}) while REQUIRE_AUTH=true. "
-            "Set CORS_ALLOWED_ORIGINS to your production domain before deploying."
-        )
-
     return {
-        # CORS headers
-        "Access-Control-Allow-Origin": allowed_origins,
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-
         # Security headers
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",  # HSTS - enforce HTTPS
         "X-Frame-Options": "DENY",  # Prevent clickjacking
@@ -172,13 +153,29 @@ class AuthService:
                 return None
 
             # Verify and decode token
+            # Accept both CLIENT_ID and api://CLIENT_ID as valid audiences
+            # (ID tokens use CLIENT_ID, access tokens use api://CLIENT_ID)
+            valid_audiences = [
+                self.config.CLIENT_ID,
+                f"api://{self.config.CLIENT_ID}",
+            ]
+
             payload = jwt.decode(
                 token,
                 signing_key,
                 algorithms=["RS256"],
-                audience=self.config.CLIENT_ID,
-                issuer=f"https://login.microsoftonline.com/{self.config.TENANT_ID}/v2.0",
+                audience=valid_audiences,
+                options={"verify_iss": False},
             )
+
+            # Manually verify issuer (accept both v1 and v2 formats)
+            valid_issuers = [
+                f"https://login.microsoftonline.com/{self.config.TENANT_ID}/v2.0",
+                f"https://sts.windows.net/{self.config.TENANT_ID}/",
+            ]
+            if payload.get("iss") not in valid_issuers:
+                logger.error(f"Invalid issuer: {payload.get('iss')}")
+                return None
 
             # Warn if this is an ID token being used as a bearer token
             # ID tokens have aud == client_id but no 'scp' or 'roles' claim

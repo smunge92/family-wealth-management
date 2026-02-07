@@ -21,7 +21,7 @@ HOW TO RESTART WITHOUT LOSING HISTORY:
   Option 2: Close terminal, reopen, run: claude --continue
   Option 3: Run: claude, then type: /resume
 
-Session files saved at: C:\Users\munge\.claude\projects\
+Session files saved at: ~\.claude\projects\
 
 --------------------------------------------------------------------------------
 CUSTOM SKILLS (Slash Commands)
@@ -63,11 +63,11 @@ AZURE COMMANDS
 --------------------------------------------------------------------------------
 | Command                          | Description                               |
 |----------------------------------|-------------------------------------------|
-| Deploy backend to Azure          | Deploy Functions to fwm-func-smunge       |
+| Deploy backend to Azure          | Deploy Functions to your Function App     |
 | Deploy frontend                  | Build and deploy to GitHub Pages          |
 | Check Azure resources            | List all resources in family-wealth-rg    |
 | View Function App logs           | Tail logs from Azure Functions            |
-| Check Key Vault secrets          | List secrets in fwm-keyvault-smunge       |
+| Check Key Vault secrets          | List secrets in your Key Vault            |
 
 --------------------------------------------------------------------------------
 DATABASE COMMANDS

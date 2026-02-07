@@ -201,7 +201,7 @@ git push origin main
 ✅ Committed: "USER_PROVIDED_MESSAGE"
 ✅ Pushed to: origin/main
 
-View on GitHub: https://github.com/YOUR_USERNAME/family-wealth-management
+View on GitHub: https://github.com/smunge92/family-wealth-management
 ```
 
 ---
