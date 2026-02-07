@@ -1,0 +1,47 @@
+{
+  "IsEncrypted": false,
+  "Host": {
+    "CORS": "http://localhost:3000",
+    "CORSCredentials": true
+  },
+  "Values": {
+    "AzureWebJobsStorage": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/storage-connection/)",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+
+    "AZURE_TENANT_ID": "your-tenant-id",
+    "AZURE_CLIENT_ID": "your-client-id",
+    "AZURE_CLIENT_SECRET": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/client-secret/)",
+
+    "SQL_SERVER": "your-server.database.windows.net",
+    "SQL_DATABASE": "family-wealth-db",
+    "SQL_USERNAME": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/sql-username/)",
+    "SQL_PASSWORD": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/sql-password/)",
+
+    "COSMOS_ENDPOINT": "https://your-cosmos.documents.azure.com:443/",
+    "COSMOS_KEY": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/cosmos-key/)",
+    "COSMOS_DATABASE": "family-wealth",
+
+    "PLAID_CLIENT_ID": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/plaid-client-id/)",
+    "PLAID_SECRET": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/plaid-secret/)",
+    "PLAID_ENV": "production",
+    "PLAID_WEBHOOK_URL": "https://your-app.azurewebsites.net/api/plaid/webhook",
+
+    "ANTHROPIC_API_KEY": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/anthropic-api-key/)",
+    "ANTHROPIC_MODEL": "claude-sonnet-4-20250514",
+
+    "KEY_VAULT_URL": "https://your-keyvault.vault.azure.net/",
+
+    "APPLICATIONINSIGHTS_CONNECTION_STRING": "InstrumentationKey=your-instrumentation-key",
+
+    "CORS_ALLOWED_ORIGINS": "https://your-production-domain.com",
+
+    "REQUIRE_AUTH": "true",
+
+    "ALLOWED_USERS": "user1@example.com,user2@example.com,user3@example.com",
+
+    "ENCRYPTION_KEY": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/encryption-key/)",
+    "ENCRYPTION_SALT": "@Microsoft.KeyVault(SecretUri=https://your-keyvault.vault.azure.net/secrets/encryption-salt/)"
+  },
+  "ConnectionStrings": {}
+}

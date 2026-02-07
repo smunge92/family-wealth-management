@@ -1,0 +1,89 @@
+================================================================================
+                    PYTHON COMMANDS - Family Wealth Management
+================================================================================
+
+Run these commands from the backend folder of your project.
+
+--------------------------------------------------------------------------------
+VIRTUAL ENVIRONMENT
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| python -m venv venv                  | Create virtual environment            |
+| venv\Scripts\activate                | Activate (Windows)                    |
+| source venv/bin/activate             | Activate (Mac/Linux)                  |
+| deactivate                           | Deactivate virtual environment        |
+
+--------------------------------------------------------------------------------
+PACKAGE MANAGEMENT (pip)
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| pip install -r requirements.txt      | Install all project dependencies      |
+| pip install [package]                | Install a new package                 |
+| pip uninstall [package]              | Remove a package                      |
+| pip list                             | Show installed packages               |
+| pip freeze > requirements.txt        | Save current packages to file         |
+| pip show [package]                   | Show package details                  |
+
+--------------------------------------------------------------------------------
+AZURE FUNCTIONS
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| func start                           | Start Functions locally (port 7071)   |
+| func start --port 7072               | Start on different port               |
+| func new                             | Create a new function (interactive)   |
+| func azure functionapp publish       | Deploy to Azure                       |
+|   fwm-func-YOUR_INITIALS --python    |                                       |
+
+--------------------------------------------------------------------------------
+TESTING (pytest)
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| pytest tests/ -v                     | Run all tests (verbose)               |
+| pytest tests/test_auth.py -v         | Run specific test file                |
+| pytest -k "test_plaid" -v            | Run tests matching pattern            |
+| pytest --cov=shared tests/           | Run with coverage report              |
+| pytest -x                            | Stop on first failure                 |
+
+--------------------------------------------------------------------------------
+CODE QUALITY
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| python -m pylint shared/             | Lint the shared module                |
+| python -m black .                    | Format code with Black                |
+| python -m mypy shared/               | Type check with mypy                  |
+
+--------------------------------------------------------------------------------
+DEBUGGING
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| python -c "from function_app         | Test if imports work                  |
+|   import app; print('OK')"           |                                       |
+| python -c "import plaid; print(      | Check if Plaid SDK is installed       |
+|   plaid.__version__)"                |                                       |
+| python test_import.py                | Run import test script                |
+
+--------------------------------------------------------------------------------
+DATABASE (if using locally)
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| python -c "from shared.database      | Test database connection              |
+|   import get_db_connection"          |                                       |
+
+--------------------------------------------------------------------------------
+COMMON ISSUES
+--------------------------------------------------------------------------------
+| Issue                                | Solution                              |
+|--------------------------------------|---------------------------------------|
+| "Module not found"                   | Activate venv first                   |
+| "Port 7071 in use"                   | Kill other func process or use        |
+|                                      | --port 7072                           |
+| pip install fails                    | Try: pip install --upgrade pip        |
+
+================================================================================

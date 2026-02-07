@@ -1,0 +1,109 @@
+================================================================================
+            QUICK REFERENCE - Family Wealth Management
+================================================================================
+
+================================================================================
+START DEVELOPMENT (Run these first each session)
+================================================================================
+
+TERMINAL 1 - Backend:
+  cd path/to/family-wealth-management/backend
+  venv\Scripts\activate          # Windows
+  source venv/bin/activate       # Mac/Linux
+  func start
+
+TERMINAL 2 - Frontend:
+  cd path/to/family-wealth-management/frontend
+  npm start
+
+================================================================================
+DAILY WORKFLOW
+================================================================================
+
+1. Pull latest changes:        git pull
+2. Start backend:              func start (from backend folder with venv)
+3. Start frontend:             npm start (from frontend folder)
+4. Make changes
+5. Test:                       pytest tests/ -v (backend)
+                               npm test (frontend)
+6. Commit:                     git add . && git commit -m "message"
+7. Push:                       git push
+
+================================================================================
+MOST COMMON COMMANDS
+================================================================================
+
+| Task                    | Command                                         |
+|-------------------------|-------------------------------------------------|
+| Start backend           | func start                                      |
+| Start frontend          | npm start                                       |
+| Run backend tests       | pytest tests/ -v                                |
+| Run frontend tests      | npm test -- --watchAll=false                    |
+| Install new Python pkg  | pip install [package]                           |
+| Install new npm pkg     | npm install [package]                           |
+| Deploy backend          | func azure functionapp publish                  |
+|                         |   fwm-func-YOUR_INITIALS --python               |
+| Deploy frontend         | npm run deploy                                  |
+| Check Azure resources   | az resource list --resource-group               |
+|                         |   family-wealth-rg --output table               |
+| View Key Vault secrets  | az keyvault secret list --vault-name            |
+|                         |   fwm-keyvault-YOUR_INITIALS --output table     |
+| Git status              | git status                                      |
+| Git commit              | git add . && git commit -m "message"            |
+| Git push                | git push                                        |
+
+================================================================================
+URLS
+================================================================================
+
+| Service                 | URL                                             |
+|-------------------------|-------------------------------------------------|
+| Frontend (local)        | http://localhost:3000                           |
+| Backend API (local)     | http://localhost:7071/api                       |
+| Azure Portal            | https://portal.azure.com                        |
+| Plaid Dashboard         | https://dashboard.plaid.com                     |
+| Anthropic Console       | https://console.anthropic.com                   |
+
+================================================================================
+PROJECT STRUCTURE
+================================================================================
+
+family-wealth-management/
+├── backend/                 # Python Azure Functions
+│   ├── functions/           # Function endpoints
+│   ├── shared/              # Shared utilities
+│   ├── tests/               # Python tests
+│   ├── local.settings.json  # Local config (secrets - DO NOT COMMIT)
+│   └── requirements.txt     # Python dependencies
+├── frontend/                # React TypeScript app
+│   ├── src/                 # Source code
+│   ├── public/              # Static files
+│   └── package.json         # npm dependencies
+├── database/                # SQL scripts
+├── docs/                    # Documentation
+└── .gitignore               # Files to exclude from git
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Backend won't start:
+  1. Check venv is activated: (venv) should show in prompt
+  2. Check port 7071 is free: kill other func process
+  3. Run: python test_import.py
+
+Frontend won't start:
+  1. Run: npm install
+  2. Check port 3000 is free
+  3. Clear cache: rm -rf node_modules && npm install
+
+CORS errors:
+  1. Restart backend: Ctrl+C then func start
+  2. Check local.settings.json has CORS configured
+
+Login not working:
+  1. Check Azure AD app registration
+  2. Verify redirect URI is http://localhost:3000
+  3. Ensure it's set as "Single-page application" type
+
+================================================================================

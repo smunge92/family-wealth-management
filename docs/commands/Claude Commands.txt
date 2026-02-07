@@ -1,0 +1,110 @@
+================================================================================
+                    CLAUDE COMMANDS - Family Wealth Management
+================================================================================
+
+These are commands/requests you can ask Claude to perform for this project.
+
+--------------------------------------------------------------------------------
+SESSION MANAGEMENT (Restart & Resume)
+--------------------------------------------------------------------------------
+| Command / Action                 | Description                               |
+|----------------------------------|-------------------------------------------|
+| /exit                            | Exit Claude Code (session auto-saved)     |
+| claude --continue                | Restart and resume last session           |
+| claude                           | Start fresh session                       |
+| /resume                          | Show recent sessions to pick from         |
+| /context                         | Show current context/token usage          |
+| Ctrl+C                           | Force close (session still saved)         |
+
+HOW TO RESTART WITHOUT LOSING HISTORY:
+  Option 1: Type /exit, then run: claude --continue
+  Option 2: Close terminal, reopen, run: claude --continue
+  Option 3: Run: claude, then type: /resume
+
+Session files saved at: C:\Users\munge\.claude\projects\
+
+--------------------------------------------------------------------------------
+CUSTOM SKILLS (Slash Commands)
+--------------------------------------------------------------------------------
+| Command                          | Description                               |
+|----------------------------------|-------------------------------------------|
+| /commit                          | Git commit workflow with good messages    |
+| /test                            | Run backend and frontend tests            |
+| /deploy                          | Deploy to Azure Functions & GitHub Pages  |
+
+To add new skills: Create .claude/skills/[name]/SKILL.md
+
+--------------------------------------------------------------------------------
+DEVELOPMENT COMMANDS
+--------------------------------------------------------------------------------
+| Command                          | Description                               |
+|----------------------------------|-------------------------------------------|
+| Run tests                        | Run all backend and frontend tests        |
+| Run backend tests                | Run Python pytest tests only              |
+| Run frontend tests               | Run React Jest tests only                 |
+| Start the backend                | Start Azure Functions locally (port 7071) |
+| Start the frontend               | Start React dev server (port 3000)        |
+| Check for errors                 | Analyze code for potential issues         |
+| Fix the error [paste error]      | Debug and fix a specific error            |
+
+--------------------------------------------------------------------------------
+GIT COMMANDS
+--------------------------------------------------------------------------------
+| Command                          | Description                               |
+|----------------------------------|-------------------------------------------|
+| Commit my changes                | Stage, create message, and commit         |
+| Show git status                  | Display modified/untracked files          |
+| Create a new branch [name]       | Create and switch to a new branch         |
+| Push to remote                   | Push commits to GitHub                    |
+| Show recent commits              | Display last 5-10 commits                 |
+
+--------------------------------------------------------------------------------
+AZURE COMMANDS
+--------------------------------------------------------------------------------
+| Command                          | Description                               |
+|----------------------------------|-------------------------------------------|
+| Deploy backend to Azure          | Deploy Functions to fwm-func-smunge       |
+| Deploy frontend                  | Build and deploy to GitHub Pages          |
+| Check Azure resources            | List all resources in family-wealth-rg    |
+| View Function App logs           | Tail logs from Azure Functions            |
+| Check Key Vault secrets          | List secrets in fwm-keyvault-smunge       |
+
+--------------------------------------------------------------------------------
+DATABASE COMMANDS
+--------------------------------------------------------------------------------
+| Command                          | Description                               |
+|----------------------------------|-------------------------------------------|
+| Show database tables             | List all tables in Azure SQL              |
+| Run a SQL query [query]          | Execute SQL against family-wealth-db      |
+| Check database connection        | Test connectivity to Azure SQL            |
+
+--------------------------------------------------------------------------------
+PLAID COMMANDS
+--------------------------------------------------------------------------------
+| Command                          | Description                               |
+|----------------------------------|-------------------------------------------|
+| Test Plaid connection            | Verify Plaid API is working               |
+| Show connected accounts          | List all linked bank accounts             |
+| Sync transactions                | Pull latest transactions from Plaid       |
+
+--------------------------------------------------------------------------------
+CODE GENERATION
+--------------------------------------------------------------------------------
+| Command                          | Description                               |
+|----------------------------------|-------------------------------------------|
+| Create a new API endpoint        | Add a new Azure Function endpoint         |
+| Add a new React component        | Create a new frontend component           |
+| Add a new database table         | Generate SQL migration                    |
+| Explain [file/function]          | Explain how code works                    |
+
+--------------------------------------------------------------------------------
+TROUBLESHOOTING
+--------------------------------------------------------------------------------
+| Command                          | Description                               |
+|----------------------------------|-------------------------------------------|
+| Why is [X] not working?          | Debug an issue                            |
+| Check if backend is running      | Verify port 7071 is responding            |
+| Check if frontend is running     | Verify port 3000 is responding            |
+| Show me the logs                 | Display recent error logs                 |
+
+================================================================================

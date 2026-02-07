@@ -1,0 +1,133 @@
+================================================================================
+                    AZURE CLI COMMANDS - Family Wealth Management
+================================================================================
+
+Your Azure Resources (replace YOUR_INITIALS with your actual initials):
+- Resource Group:    family-wealth-rg
+- Function App:      fwm-func-YOUR_INITIALS
+- SQL Server:        fwm-sql-server-YOUR_INITIALS
+- SQL Database:      family-wealth-db
+- Cosmos DB:         fwm-cosmos-YOUR_INITIALS
+- Storage Account:   fwmstorageyourinitials
+- Key Vault:         fwm-keyvault-YOUR_INITIALS
+
+--------------------------------------------------------------------------------
+AUTHENTICATION
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| az login                             | Login to Azure (opens browser)        |
+| az logout                            | Logout from Azure                     |
+| az account show                      | Show current subscription             |
+| az account list --output table       | List all subscriptions                |
+| az account set --subscription [id]   | Switch subscription                   |
+
+--------------------------------------------------------------------------------
+RESOURCE GROUP
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| az group list --output table         | List all resource groups              |
+| az group show --name family-wealth-rg| Show resource group details           |
+| az resource list --resource-group    | List all resources in group           |
+|   family-wealth-rg --output table    |                                       |
+
+--------------------------------------------------------------------------------
+FUNCTION APP
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| func azure functionapp publish       | Deploy functions to Azure             |
+|   fwm-func-YOUR_INITIALS --python    |                                       |
+| az functionapp show --name           | Show Function App details             |
+|   fwm-func-YOUR_INITIALS             |                                       |
+|   --resource-group family-wealth-rg  |                                       |
+| az functionapp function list --name  | List all functions                    |
+|   fwm-func-YOUR_INITIALS             |                                       |
+|   --resource-group family-wealth-rg  |                                       |
+|   --output table                     |                                       |
+| az functionapp log tail --name       | Stream live logs                      |
+|   fwm-func-YOUR_INITIALS             |                                       |
+|   --resource-group family-wealth-rg  |                                       |
+| az functionapp restart --name        | Restart the Function App              |
+|   fwm-func-YOUR_INITIALS             |                                       |
+|   --resource-group family-wealth-rg  |                                       |
+| az functionapp config appsettings    | Show app settings                     |
+|   list --name fwm-func-YOUR_INITIALS |                                       |
+|   --resource-group family-wealth-rg  |                                       |
+
+--------------------------------------------------------------------------------
+SQL DATABASE
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| az sql server list --resource-group  | List SQL servers                      |
+|   family-wealth-rg --output table    |                                       |
+| az sql db list --server              | List databases                        |
+|   fwm-sql-server-YOUR_INITIALS       |                                       |
+|   --resource-group family-wealth-rg  |                                       |
+|   --output table                     |                                       |
+| az sql server firewall-rule list     | List firewall rules                   |
+|   --server fwm-sql-server-YOUR_INITIALS                                      |
+|   --resource-group family-wealth-rg  |                                       |
+
+--------------------------------------------------------------------------------
+COSMOS DB
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| az cosmosdb show --name              | Show Cosmos DB details                |
+|   fwm-cosmos-YOUR_INITIALS           |                                       |
+|   --resource-group family-wealth-rg  |                                       |
+| az cosmosdb keys list --name         | Get Cosmos DB keys                    |
+|   fwm-cosmos-YOUR_INITIALS           |                                       |
+|   --resource-group family-wealth-rg  |                                       |
+| az cosmosdb sql database list        | List databases                        |
+|   --account-name fwm-cosmos-YOUR_INITIALS                                    |
+|   --resource-group family-wealth-rg  |                                       |
+
+--------------------------------------------------------------------------------
+KEY VAULT
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| az keyvault secret list --vault-name | List all secrets                      |
+|   fwm-keyvault-YOUR_INITIALS         |                                       |
+|   --output table                     |                                       |
+| az keyvault secret show --vault-name | Show a secret value                   |
+|   fwm-keyvault-YOUR_INITIALS         |                                       |
+|   --name [name]                      |                                       |
+| az keyvault secret set --vault-name  | Add/update a secret                   |
+|   fwm-keyvault-YOUR_INITIALS         |                                       |
+|   --name [name] --value [value]      |                                       |
+
+--------------------------------------------------------------------------------
+STORAGE ACCOUNT
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| az storage account show --name       | Show storage account details          |
+|   fwmstorageyourinitials             |                                       |
+|   --resource-group family-wealth-rg  |                                       |
+| az storage account show-connection   | Get connection string                 |
+|   -string --name fwmstorageyourinitials                                      |
+
+--------------------------------------------------------------------------------
+APP REGISTRATION (Azure AD)
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| az ad app list --display-name        | Find app by name                      |
+|   "FamilyWealthManagement"           |                                       |
+|   --output table                     |                                       |
+| az ad app show --id [client-id]      | Show app details                      |
+
+--------------------------------------------------------------------------------
+COST MANAGEMENT
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| az consumption usage list            | View usage/costs (if enabled)         |
+|   --resource-group family-wealth-rg  |                                       |
+
+================================================================================

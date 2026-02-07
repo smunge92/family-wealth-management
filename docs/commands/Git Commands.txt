@@ -1,0 +1,102 @@
+================================================================================
+                    GIT COMMANDS - Family Wealth Management
+================================================================================
+
+Run these commands from: C:\Users\munge\Claude Projects\Family Wealth Management
+
+--------------------------------------------------------------------------------
+BASIC WORKFLOW
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| git status                           | Show modified/staged/untracked files  |
+| git add .                            | Stage all changes                     |
+| git add [file]                       | Stage specific file                   |
+| git commit -m "message"              | Commit staged changes                 |
+| git push                             | Push commits to remote                |
+| git pull                             | Pull latest from remote               |
+
+--------------------------------------------------------------------------------
+BRANCHING
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| git branch                           | List local branches                   |
+| git branch -a                        | List all branches (incl. remote)      |
+| git branch [name]                    | Create new branch                     |
+| git checkout [branch]                | Switch to branch                      |
+| git checkout -b [name]               | Create and switch to new branch       |
+| git merge [branch]                   | Merge branch into current             |
+| git branch -d [name]                 | Delete local branch                   |
+
+--------------------------------------------------------------------------------
+VIEWING HISTORY
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| git log                              | Show commit history                   |
+| git log --oneline -10                | Show last 10 commits (compact)        |
+| git log --oneline --graph            | Show visual branch history            |
+| git diff                             | Show unstaged changes                 |
+| git diff --staged                    | Show staged changes                   |
+| git show [commit]                    | Show specific commit details          |
+
+--------------------------------------------------------------------------------
+REMOTE REPOSITORY
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| git remote -v                        | Show remote URLs                      |
+| git remote add origin [url]          | Add remote repository                 |
+| git push -u origin main              | Push and set upstream                 |
+| git push origin [branch]             | Push specific branch                  |
+| git fetch                            | Download remote changes               |
+
+--------------------------------------------------------------------------------
+UNDOING CHANGES
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| git checkout -- [file]               | Discard changes in file               |
+| git reset HEAD [file]                | Unstage a file                        |
+| git reset --soft HEAD~1              | Undo last commit (keep changes)       |
+| git reset --hard HEAD~1              | Undo last commit (discard changes)    |
+| git stash                            | Temporarily save changes              |
+| git stash pop                        | Restore stashed changes               |
+
+--------------------------------------------------------------------------------
+USEFUL FOR THIS PROJECT
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| git status -s                        | Short status format                   |
+| git log --all --oneline -20          | Recent commits across all branches    |
+| git diff HEAD~1                      | Compare with previous commit          |
+
+--------------------------------------------------------------------------------
+.GITIGNORE (Already configured)
+--------------------------------------------------------------------------------
+These files/folders are ignored:
+- node_modules/           (npm packages)
+- venv/                   (Python virtual environment)
+- __pycache__/            (Python bytecode)
+- .env                    (Environment secrets)
+- local.settings.json     (Azure Functions local settings)
+- build/                  (React production build)
+- .pytest_cache/          (Pytest cache)
+
+--------------------------------------------------------------------------------
+COMMIT MESSAGE CONVENTIONS
+--------------------------------------------------------------------------------
+| Prefix       | When to use                                              |
+|--------------|----------------------------------------------------------|
+| feat:        | New feature (e.g., "feat: add Plaid bank connection")    |
+| fix:         | Bug fix (e.g., "fix: resolve CORS error")                |
+| docs:        | Documentation (e.g., "docs: update README")              |
+| refactor:    | Code refactoring (e.g., "refactor: simplify auth flow")  |
+| test:        | Adding tests (e.g., "test: add Plaid client tests")      |
+| chore:       | Maintenance (e.g., "chore: update dependencies")         |
+
+Example: git commit -m "feat: add transaction sync from Plaid"
+
+================================================================================

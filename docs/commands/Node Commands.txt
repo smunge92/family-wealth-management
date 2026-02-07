@@ -1,0 +1,88 @@
+================================================================================
+                    NODE/NPM COMMANDS - Family Wealth Management
+================================================================================
+
+Run these commands from: C:\Users\munge\Claude Projects\Family Wealth Management\frontend
+
+--------------------------------------------------------------------------------
+PACKAGE MANAGEMENT (npm)
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| npm install                          | Install all dependencies from         |
+|                                      | package.json                          |
+| npm install [package]                | Install and add to dependencies       |
+| npm install [package] --save-dev     | Install as dev dependency             |
+| npm uninstall [package]              | Remove a package                      |
+| npm update                           | Update all packages                   |
+| npm list                             | Show installed packages               |
+| npm outdated                         | Show outdated packages                |
+| npm audit                            | Check for security vulnerabilities    |
+| npm audit fix                        | Fix vulnerabilities automatically     |
+
+--------------------------------------------------------------------------------
+DEVELOPMENT
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| npm start                            | Start dev server (port 3000)          |
+| npm run build                        | Build production bundle               |
+| npm test                             | Run tests in watch mode               |
+| npm test -- --watchAll=false         | Run tests once (CI mode)              |
+| npm test -- --coverage               | Run tests with coverage               |
+
+--------------------------------------------------------------------------------
+DEPLOYMENT
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| npm run build                        | Create production build               |
+| npm run deploy                       | Deploy to GitHub Pages                |
+|                                      | (runs build first via predeploy)      |
+
+--------------------------------------------------------------------------------
+SCRIPTS (from package.json)
+--------------------------------------------------------------------------------
+| Script                               | Description                           |
+|--------------------------------------|---------------------------------------|
+| npm start                            | react-scripts start                   |
+| npm run build                        | react-scripts build                   |
+| npm test                             | react-scripts test                    |
+| npm run eject                        | Eject from Create React App (caution!)|
+| npm run predeploy                    | Build before deploy                   |
+| npm run deploy                       | Deploy to GitHub Pages                |
+
+--------------------------------------------------------------------------------
+USEFUL PACKAGES FOR THIS PROJECT
+--------------------------------------------------------------------------------
+| Package                              | Purpose                               |
+|--------------------------------------|---------------------------------------|
+| @azure/msal-browser                  | Microsoft authentication              |
+| @azure/msal-react                    | React hooks for MSAL                  |
+| react-plaid-link                     | Plaid Link React component            |
+| axios                                | HTTP client for API calls             |
+| react-router-dom                     | Page routing                          |
+| recharts                             | Charts and visualizations             |
+| date-fns                             | Date formatting                       |
+| powerbi-client-react                 | Power BI embedded reports             |
+
+--------------------------------------------------------------------------------
+DEBUGGING
+--------------------------------------------------------------------------------
+| Command                              | Description                           |
+|--------------------------------------|---------------------------------------|
+| npm cache clean --force              | Clear npm cache                       |
+| rm -rf node_modules && npm install   | Fresh install (fixes many issues)     |
+| npm ls [package]                     | Check if package is installed         |
+
+--------------------------------------------------------------------------------
+COMMON ISSUES
+--------------------------------------------------------------------------------
+| Issue                                | Solution                              |
+|--------------------------------------|---------------------------------------|
+| "Module not found"                   | Run: npm install                      |
+| Port 3000 in use                     | Kill process or use different port    |
+| Build fails                          | Check for TypeScript errors           |
+| Tests fail                           | Check console for specific error      |
+
+================================================================================

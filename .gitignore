@@ -1,0 +1,156 @@
+# Windows reserved device names
+nul
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.log
+*.pot
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# Azure Functions
+local.settings.json
+__blobstorage__/
+__queuestorage__/
+__azurite_db*__.json
+.python_packages/
+.funcignore
+
+# Node / React
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+coverage/
+build/
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.vs/
+
+# Environment Variables
+.env
+*.env
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+
+# Azure
+*.azureauth
+.azure/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+tmpclaude-*
+
+# Claude Code local settings (user-specific)
+.claude/settings.local.json
+.claude/projects/
+
+# Bicep compiled files
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!.vscode/*.json
+!infrastructure/parameters/*.json
+
+# Power BI
+*.pbix.bak
+
+# Backup files
+*.bak
+*.backup
+
+# Credentials
+credentials.json
+service-account.json
+*.credentials
+auth.json
+
+# API Keys and Secrets (additional patterns)
+*secret*
+*apikey*
+*.secret.json
+config.local.json
+settings.local.json
+
+# Plaid
+plaid-credentials.json
+
+# Deployment, security, and admin guides (keep private)
+PRODUCTION_DEPLOYMENT_GUIDE.md
+SECURITY_SETUP.md
+ADDING_USERS_GUIDE.md
+
+# Frontend environment files
+frontend/.env*
+!frontend/.env.example
+
+# Backend settings
+backend/local.settings.json
+!backend/local.settings.json.example

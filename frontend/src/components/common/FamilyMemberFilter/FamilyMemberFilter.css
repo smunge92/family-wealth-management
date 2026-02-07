@@ -1,0 +1,296 @@
+.family-member-filter {
+  position: relative;
+  display: inline-block;
+}
+
+.filter-loading {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+}
+
+.filter-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.filter-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.5);
+}
+
+.filter-icon {
+  display: flex;
+  align-items: center;
+  opacity: 0.9;
+}
+
+.filter-text {
+  font-weight: 500;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filter-arrow {
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.filter-arrow.open {
+  transform: rotate(180deg);
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 200px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  animation: dropdownFadeIn 0.15s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.filter-option:hover {
+  background: rgba(128, 0, 32, 0.05);
+}
+
+.filter-option.selected {
+  background: rgba(128, 0, 32, 0.08);
+  color: #800020;
+}
+
+.option-icon {
+  display: flex;
+  align-items: center;
+  color: #666;
+}
+
+.filter-option.selected .option-icon {
+  color: #800020;
+}
+
+.option-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.option-check {
+  display: flex;
+  align-items: center;
+  color: #800020;
+}
+
+.filter-divider {
+  height: 1px;
+  background: #eee;
+  margin: 0.25rem 0;
+}
+
+/* Family member row with delete button */
+.filter-option-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.filter-option-row .filter-option {
+  flex: 1;
+  padding-right: 0.5rem;
+}
+
+.delete-member-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  background: none;
+  border: none;
+  color: #999;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  opacity: 0;
+}
+
+.filter-option-row:hover .delete-member-btn {
+  opacity: 1;
+}
+
+.delete-member-btn:hover {
+  background: rgba(211, 47, 47, 0.1);
+  color: #d32f2f;
+}
+
+.delete-member-btn:focus {
+  outline: none;
+  opacity: 1;
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.3);
+}
+
+/* Delete Confirmation Modal */
+.delete-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: overlayFadeIn 0.2s ease;
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.delete-confirm-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: modalSlideIn 0.2s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.delete-confirm-icon {
+  margin-bottom: 1rem;
+}
+
+.delete-confirm-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.delete-confirm-message {
+  margin: 0 0 0.5rem 0;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.delete-confirm-warning {
+  margin: 0 0 1.5rem 0;
+  padding: 0.75rem;
+  background: #fff3e0;
+  border-radius: 6px;
+  color: #e65100;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.delete-confirm-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.delete-confirm-cancel,
+.delete-confirm-delete {
+  padding: 0.625rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.delete-confirm-cancel {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #666;
+}
+
+.delete-confirm-cancel:hover:not(:disabled) {
+  background: #eee;
+  border-color: #ccc;
+}
+
+.delete-confirm-delete {
+  background: #d32f2f;
+  border: 1px solid #d32f2f;
+  color: white;
+}
+
+.delete-confirm-delete:hover:not(:disabled) {
+  background: #b71c1c;
+  border-color: #b71c1c;
+}
+
+.delete-confirm-cancel:disabled,
+.delete-confirm-delete:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
