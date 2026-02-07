@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a237e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d47a1;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA000;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#2E7D32;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#43A047;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="512" cy="512" r="480" fill="url(#bgGrad)" />
+  <circle cx="512" cy="512" r="450" fill="none" stroke="url(#goldGrad)" stroke-width="4" opacity="0.5" />
+
+  <!-- Shield shape -->
+  <path d="M512 180 L720 280 L720 520 C720 680 512 800 512 800 C512 800 304 680 304 520 L304 280 Z"
+        fill="none" stroke="url(#goldGrad)" stroke-width="8" opacity="0.9"/>
+  <path d="M512 200 L700 292 L700 515 C700 660 512 775 512 775 C512 775 324 660 324 515 L324 292 Z"
+        fill="#0d1b4a" opacity="0.6"/>
+
+  <!-- Growth chart bars -->
+  <rect x="380" y="560" width="50" height="120" rx="6" fill="url(#greenGrad)" opacity="0.9"/>
+  <rect x="450" y="490" width="50" height="190" rx="6" fill="url(#greenGrad)" opacity="0.9"/>
+  <rect x="520" y="420" width="50" height="260" rx="6" fill="url(#greenGrad)" opacity="0.9"/>
+  <rect x="590" y="350" width="50" height="330" rx="6" fill="url(#goldGrad)" opacity="0.9"/>
+
+  <!-- Upward trend line -->
+  <polyline points="405,540 475,470 545,400 615,330"
+            fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="615" cy="330" r="10" fill="#FFFFFF"/>
+
+  <!-- Dollar sign -->
+  <text x="512" y="310" font-family="Georgia, serif" font-size="100" font-weight="bold"
+        fill="url(#goldGrad)" text-anchor="middle" dominant-baseline="middle">$</text>
+
+  <!-- FWM text -->
+  <text x="512" y="740" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="bold"
+        fill="url(#goldGrad)" text-anchor="middle" letter-spacing="12">FWM</text>
+
+  <!-- Family text -->
+  <text x="512" y="900" font-family="Arial, Helvetica, sans-serif" font-size="36"
+        fill="#FFFFFF" text-anchor="middle" opacity="0.8" letter-spacing="8">FAMILY WEALTH</text>
+</svg>

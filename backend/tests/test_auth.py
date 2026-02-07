@@ -51,13 +51,14 @@ class TestAuthFunctions:
 class TestSecurityHeaders:
     """Test security headers in CORS response"""
 
-    def test_cors_headers_present(self):
-        """Test CORS headers are returned"""
+    def test_security_headers_present(self):
+        """Test security headers are returned (CORS handled by Azure platform)"""
         headers = get_cors_headers()
 
-        assert "Access-Control-Allow-Origin" in headers
-        assert "Access-Control-Allow-Methods" in headers
-        assert "Access-Control-Allow-Headers" in headers
+        # CORS is handled at the Azure Functions platform level, not in code
+        assert "Access-Control-Allow-Origin" not in headers
+        assert "Strict-Transport-Security" in headers
+        assert "X-Frame-Options" in headers
 
     def test_hsts_header_present(self):
         """Test HSTS header is present for HTTPS enforcement"""
@@ -265,12 +266,10 @@ class TestValidateUserAccess:
 class TestCorsWildcardWarning:
     """Test CORS wildcard warning"""
 
-    def test_wildcard_cors_logs_warning(self, caplog):
-        """Test wildcard CORS origin logs a warning"""
-        import logging
+    def test_cors_not_in_code_headers(self, caplog):
+        """Test CORS headers are NOT set in code (handled by Azure platform)"""
+        headers = get_cors_headers()
 
-        with patch.dict(os.environ, {"CORS_ALLOWED_ORIGINS": "*"}):
-            with caplog.at_level(logging.WARNING):
-                headers = get_cors_headers()
-
-            assert "insecure" in caplog.text.lower() or headers["Access-Control-Allow-Origin"] == "*"
+        # CORS_ALLOWED_ORIGINS as env var crashes Azure Functions host
+        # CORS is configured via Azure Portal > Function App > API > CORS
+        assert "Access-Control-Allow-Origin" not in headers
