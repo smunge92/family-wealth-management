@@ -174,8 +174,6 @@ You'll need to create these Azure resources:
 - **Azure AD App Registrations** - one for backend API, one for frontend SPA
 - **Storage Account** - required by Azure Functions
 
-See [PRODUCTION_DEPLOYMENT_GUIDE.md](PRODUCTION_DEPLOYMENT_GUIDE.md) for detailed step-by-step instructions.
-
 ---
 
 ## Running Tests
