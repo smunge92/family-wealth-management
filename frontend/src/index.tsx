@@ -21,10 +21,10 @@ msalInstance.initialize().then(() => {
   // Handle redirect promise (for redirect flow)
   msalInstance.handleRedirectPromise().then((response) => {
     if (response) {
-      console.log('Login successful:', response.account?.username);
+      console.log('Login successful');
     }
   }).catch((error) => {
-    console.error('Redirect error:', error);
+    console.error('Redirect error:', error?.errorCode || 'unknown');
   });
 
   // Set active account if available

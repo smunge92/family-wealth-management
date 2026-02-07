@@ -22,9 +22,27 @@ const App: React.FC = () => {
     }
   }, [instance, isAuthenticated]);
 
+  const [loginError, setLoginError] = useState<string | null>(null);
+
   const handleLogin = () => {
+    setLoginError(null);
     instance.loginPopup(loginRequest).catch((error) => {
-      console.error('Login failed:', error);
+      // Sanitize error - never expose Client IDs, tenant IDs, or internal details
+      const errorMsg = error?.errorMessage || error?.message || '';
+      if (errorMsg.includes('AADSTS50020') || errorMsg.includes('does not exist in')) {
+        setLoginError('Access denied. Your account is not authorized for this application.');
+      } else if (errorMsg.includes('AADSTS65004') || errorMsg.includes('consent')) {
+        setLoginError('Access denied. Please contact the app administrator.');
+      } else if (errorMsg.includes('user_cancelled') || errorMsg.includes('cancelled')) {
+        // User closed the popup - no error to show
+        setLoginError(null);
+      } else if (errorMsg.includes('AADSTS')) {
+        setLoginError('Sign-in failed. Please try again or contact the app administrator.');
+      } else {
+        setLoginError(null);
+      }
+      // Log sanitized info for debugging (no secrets)
+      console.error('Login failed:', error?.errorCode || 'unknown');
     });
   };
 
@@ -41,6 +59,9 @@ const App: React.FC = () => {
           <div className="card">
             <h1>Family Wealth Management</h1>
             <p>Secure financial tracking and planning for your family</p>
+            {loginError && (
+              <div className="login-error">{loginError}</div>
+            )}
             <button className="button button-primary" onClick={handleLogin}>
               Sign in with Microsoft
             </button>
