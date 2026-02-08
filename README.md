@@ -12,40 +12,40 @@ A personal financial tracking app that connects to your actual bank accounts, sy
 
 ## Screenshots
 
+### About
+Overview of the app's tech stack, features, and architecture.
+
+![About](docs/screenshots/About.png)
+
 ### Dashboard
 The main dashboard with summary cards, account overview, spending charts, monthly trends, and AI-generated financial insights — all in one view.
 
 ![Dashboard](docs/screenshots/dashboard.png)
-
-### Transaction Management
-Browse, search, and categorize transactions. Each transaction shows the merchant, amount, date, category with icon, and categorization source (manual, rule-based, or AI).
-
-![Transactions](docs/screenshots/transactions.png)
-
-### Account Overview
-View all connected bank accounts with balances, institution details, and connection status. Connect new accounts via Plaid with one click.
-
-![Accounts](docs/screenshots/accounts.png)
-
-### AI Financial Planning
-Interactive AI-powered financial insights — retirement planning, house affordability analysis, and family financial planning powered by Claude.
-
-![Financial Planning](docs/screenshots/planning.png)
-
-### Dashboard — Charts & Insights
-Spending by category, income vs expenses over time, and AI-generated financial insights with actionable recommendations.
-
-![Dashboard Charts](docs/screenshots/dashboard_2.png)
 
 ### Spending by Category
 Horizontal bar chart showing top spending categories with custom icons, colors, and dollar amounts. Built from your actual categorized transactions.
 
 ![Spending by Category](docs/screenshots/spending-by-category.png)
 
-### About
-Overview of the app's tech stack, features, and architecture.
+### Dashboard — Charts & Insights
+Spending by category, income vs expenses over time, and AI-generated financial insights with actionable recommendations.
 
-![About](docs/screenshots/About.png)
+![Dashboard Charts](docs/screenshots/dashboard_2.png)
+
+### Account Overview
+View all connected bank accounts with balances, institution details, and connection status. Connect new accounts via Plaid with one click.
+
+![Accounts](docs/screenshots/accounts.png)
+
+### Transaction Management
+Browse, search, and categorize transactions. Each transaction shows the merchant, amount, date, category with icon, and categorization source (manual, rule-based, or AI).
+
+![Transactions](docs/screenshots/transactions.png)
+
+### AI Financial Planning
+Interactive AI-powered financial insights — retirement planning, house affordability analysis, and family financial planning powered by Claude.
+
+![Financial Planning](docs/screenshots/planning.png)
 
 ---
 
