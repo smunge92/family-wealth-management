@@ -48,7 +48,7 @@ const App: React.FC = () => {
 
   const handleLogout = () => {
     instance.logoutPopup().catch((error) => {
-      console.error('Logout failed:', error);
+      console.error('Logout failed:', error?.errorCode || 'unknown');
     });
   };
 
