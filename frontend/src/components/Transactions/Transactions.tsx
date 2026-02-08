@@ -118,7 +118,13 @@ const Transactions: React.FC = () => {
       }
 
       let totalSaved = 0;
-      for (const account of accounts) {
+      for (let i = 0; i < accounts.length; i++) {
+        const account = accounts[i];
+        if (i > 0) {
+          // Wait between accounts to avoid rate limiting
+          await new Promise(resolve => setTimeout(resolve, 3000));
+        }
+        toast.info('Syncing History', `Syncing account ${i + 1} of ${accounts.length}: ${account.institution_name || account.account_name}...`);
         const response = await api.post('/transactions/sync-historical', {
           user_id: user.localAccountId,
           account_id: account.account_id,

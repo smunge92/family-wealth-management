@@ -254,7 +254,7 @@ async def sync_transactions(req: func.HttpRequest) -> func.HttpResponse:
 
 @bp.route(route="transactions/sync-historical", methods=["POST", "OPTIONS"], auth_level=func.AuthLevel.ANONYMOUS)
 @require_auth
-@rate_limit(limit=2, window_seconds=60)  # 2 historical syncs per minute
+@rate_limit(limit=10, window_seconds=60)  # 10 historical syncs per minute (one per account)
 async def sync_historical_transactions(req: func.HttpRequest) -> func.HttpResponse:
     """
     Sync historical transactions (up to 2 years) for initial account setup
