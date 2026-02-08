@@ -46,6 +46,7 @@ const Transactions: React.FC = () => {
     start: '',
     end: ''
   });
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const [showCategoryManager, setShowCategoryManager] = useState(false);
   const limit = 50;
 
@@ -166,13 +167,18 @@ const Transactions: React.FC = () => {
         }
       }
 
+      // Category filter
+      if (selectedCategoryId !== null) {
+        if (txn.user_category_id !== selectedCategoryId) return false;
+      }
+
       // Date range filter
       if (dateRange.start && new Date(txn.date) < new Date(dateRange.start)) return false;
       if (dateRange.end && new Date(txn.date) > new Date(dateRange.end)) return false;
 
       return true;
     });
-  }, [transactions, filter, searchQuery, dateRange]);
+  }, [transactions, filter, searchQuery, dateRange, selectedCategoryId]);
 
   // Calculate summary stats - use totals from API for accurate all-transactions stats
   const stats = useMemo(() => {
@@ -360,7 +366,7 @@ const Transactions: React.FC = () => {
           </div>
         </div>
 
-        {/* Date Range */}
+        {/* Date Range and Category Filter */}
         <div className="date-filters-3d">
           <div className="date-input-group-3d">
             <label>From</label>
@@ -380,12 +386,27 @@ const Transactions: React.FC = () => {
               className="date-input-3d"
             />
           </div>
-          {(dateRange.start || dateRange.end) && (
+          <div className="date-input-group-3d">
+            <label>Category</label>
+            <select
+              value={selectedCategoryId ?? ''}
+              onChange={(e) => setSelectedCategoryId(e.target.value ? parseInt(e.target.value, 10) : null)}
+              className="date-input-3d"
+            >
+              <option value="">All Categories</option>
+              {categories.map(cat => (
+                <option key={cat.category_id} value={cat.category_id}>
+                  {cat.icon ? `${cat.icon} ` : ''}{cat.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          {(dateRange.start || dateRange.end || selectedCategoryId !== null) && (
             <button
               className="button-3d button-secondary-3d"
-              onClick={() => setDateRange({ start: '', end: '' })}
+              onClick={() => { setDateRange({ start: '', end: '' }); setSelectedCategoryId(null); }}
             >
-              Clear Dates
+              Clear Filters
             </button>
           )}
         </div>
