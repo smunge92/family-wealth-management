@@ -3,6 +3,49 @@
 A personal financial tracking app that connects to your actual bank accounts, syncs transactions automatically, categorizes everything with AI, and gives you charts that actually make sense. Built for families who want to see where their money goes without spreadsheet nightmares.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Azure Functions](https://img.shields.io/badge/Backend-Azure%20Functions-blue)](https://azure.microsoft.com/en-us/products/functions)
+[![React](https://img.shields.io/badge/Frontend-React%2018-61dafb)](https://react.dev/)
+[![Python](https://img.shields.io/badge/Python-3.11-3776ab)](https://python.org)
+[![Tests](https://img.shields.io/badge/Tests-194%20passing-brightgreen)]()
+
+---
+
+## Screenshots
+
+### Dashboard
+The main dashboard with summary cards, account overview, spending charts, monthly trends, and AI-generated financial insights — all in one view.
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Transaction Management
+Browse, search, and categorize transactions. Each transaction shows the merchant, amount, date, category with icon, and categorization source (manual, rule-based, or AI).
+
+![Transactions](docs/screenshots/transactions.png)
+
+### Account Overview
+View all connected bank accounts with balances, institution details, and connection status. Connect new accounts via Plaid with one click.
+
+![Accounts](docs/screenshots/accounts.png)
+
+### AI Financial Planning
+Interactive AI-powered financial insights — retirement planning, house affordability analysis, and family financial planning powered by Claude.
+
+![Financial Planning](docs/screenshots/planning.png)
+
+### Dashboard — Charts & Insights
+Spending by category, income vs expenses over time, and AI-generated financial insights with actionable recommendations.
+
+![Dashboard Charts](docs/screenshots/dashboard_2.png)
+
+### Spending by Category
+Horizontal bar chart showing top spending categories with custom icons, colors, and dollar amounts. Built from your actual categorized transactions.
+
+![Spending by Category](docs/screenshots/spending-by-category.png)
+
+### About
+Overview of the app's tech stack, features, and architecture.
+
+![About](docs/screenshots/About.png)
 
 ---
 
@@ -33,23 +76,55 @@ A personal financial tracking app that connects to your actual bank accounts, sy
 
 ---
 
+## Architecture
+
+```
+                         ┌─────────────────────┐
+                         │    GitHub Pages      │
+                         │  React + TypeScript  │
+                         │     (Frontend)       │
+                         └─────────┬───────────┘
+                                   │ HTTPS
+                         ┌─────────▼───────────┐
+                         │   Azure Functions    │
+                         │   Python 3.11 (21    │
+                         │   API endpoints)     │
+                         └──┬──────┬────────┬──┘
+                            │      │        │
+                 ┌──────────▼┐ ┌───▼────┐ ┌─▼──────────┐
+                 │ Azure SQL  │ │Cosmos  │ │ Key Vault  │
+                 │ Database   │ │  DB    │ │ (Secrets)  │
+                 └────────────┘ └────────┘ └────────────┘
+                            │      │
+                 ┌──────────▼┐ ┌───▼────────┐
+                 │  Plaid    │ │ Claude API │
+                 │  (Banks)  │ │   (AI)     │
+                 └───────────┘ └────────────┘
+```
+
+---
+
 ## Project Structure
 
 ```
 Family Wealth Management/
 ├── backend/                    # Azure Functions (Python)
 │   ├── functions/              # API endpoints (Blueprints)
-│   │   ├── accounts.py         # Account CRUD + Plaid link
-│   │   ├── transactions.py     # Transaction sync + query
-│   │   ├── categories.py       # Category management
-│   │   ├── insights.py         # AI-powered financial insights
-│   │   ├── family_members.py   # Family member profiles
-│   │   └── ...
+│   │   ├── api/                # Core REST APIs
+│   │   │   ├── accounts.py     # Account CRUD + Plaid link
+│   │   │   ├── transactions.py # Transaction sync + query
+│   │   │   ├── categories.py   # Category management
+│   │   │   ├── insights.py     # AI-powered financial insights
+│   │   │   └── family_members.py
+│   │   ├── plaid_integration/  # Bank sync + webhooks
+│   │   ├── claude_integration/ # AI analysis endpoints
+│   │   ├── data_aggregation/   # Balance + net worth calculations
+│   │   └── scheduled_jobs/     # Daily sync + weekly analysis
 │   ├── shared/                 # Shared utilities
 │   │   ├── database.py         # SQL connection + parameterized queries
 │   │   ├── plaid_client.py     # Plaid API wrapper
 │   │   ├── cosmos_client.py    # Cosmos DB operations
-│   │   └── auth.py             # Azure AD token validation
+│   │   └── auth.py             # Azure AD token validation + RBAC
 │   ├── tests/                  # Backend tests (194 passing)
 │   ├── function_app.py         # App entry point
 │   └── requirements.txt        # Python dependencies
@@ -61,8 +136,9 @@ Family Wealth Management/
 │   │   │   ├── Accounts/       # Account management + Plaid Link
 │   │   │   ├── Transactions/   # Transaction list + category editing
 │   │   │   ├── Insights/       # AI financial planning
-│   │   │   ├── About/          # App info page
-│   │   │   └── common/         # Shared components (filters, etc.)
+│   │   │   ├── Categories/     # Category rule management
+│   │   │   └── common/         # Shared components (filters, toasts)
+│   │   ├── context/            # React contexts (family, categories)
 │   │   ├── services/           # API client + auth config
 │   │   └── types/              # TypeScript interfaces
 │   └── package.json
@@ -72,9 +148,7 @@ Family Wealth Management/
 │   └── schema/                 # Views + stored procedures
 │
 ├── infrastructure/             # Azure Bicep templates
-├── docs/                       # Additional documentation
-├── PRODUCTION_DEPLOYMENT_GUIDE.md  # Step-by-step production deployment
-├── SECURITY_SETUP.md           # Security configuration reference
+├── docs/                       # Documentation + screenshots
 └── LICENSE                     # MIT
 ```
 
@@ -94,7 +168,7 @@ Uses a three-tier system:
 Each category has a custom icon, color, and name. The system tracks where the categorization came from so you always know why something was tagged the way it was.
 
 ### Bank Sync
-Plaid's cursor-based incremental sync means we only pull new/changed transactions, not the whole history every time. Supports checking, savings, credit cards, investments, loans - basically anything Plaid can connect to.
+Plaid's cursor-based incremental sync means we only pull new/changed transactions, not the whole history every time. Supports checking, savings, credit cards, investments, loans — basically anything Plaid can connect to.
 
 ### Security
 - Azure AD enforces who can even log in
@@ -122,7 +196,7 @@ Plaid's cursor-based incremental sync means we only pull new/changed transaction
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/family-wealth-management.git
+   git clone https://github.com/smunge92/family-wealth-management.git
    cd family-wealth-management
    ```
 
@@ -196,8 +270,6 @@ npm test
 - **Backend** deploys to Azure Functions via `func azure functionapp publish`
 - **Frontend** deploys to GitHub Pages via `npm run deploy` (uses the `gh-pages` package)
 
-Full deployment guide with checklists: [PRODUCTION_DEPLOYMENT_GUIDE.md](PRODUCTION_DEPLOYMENT_GUIDE.md)
-
 ---
 
 ## Security Notes
@@ -206,7 +278,7 @@ This app handles real financial data. A few things to keep in mind:
 
 - **Never commit secrets.** The `.gitignore` is configured to block `local.settings.json`, `.env` files, credential files, and anything matching `*secret*` or `*apikey*` patterns. Don't fight it.
 - **Use Key Vault in production.** Function App settings should reference Key Vault secrets, not contain raw values.
-- **Rotate keys regularly.** Especially after any suspected exposure. The deployment guide covers rotation.
+- **Rotate keys regularly.** Especially after any suspected exposure.
 - **Restrict access.** Enable "Assignment required" in Azure AD Enterprise Applications so only your family members can sign in.
 
 ---
@@ -228,16 +300,10 @@ Running this in Azure on a modest setup:
 
 ---
 
-## Contributing
-
-This is a personal family project, but if you find it useful and want to contribute, feel free to open an issue or PR. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
----
-
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details. Do whatever you want with it.
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-*Built with React, Python, Azure, Plaid, and an unreasonable amount of coffee.*
+*Built with React, Python, Azure, Plaid, Claude, and an unreasonable amount of coffee.*
