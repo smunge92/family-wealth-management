@@ -55,7 +55,7 @@ class ClaudeClient:
             return response.content[0].text
 
         except Exception as e:
-            logger.error(f"Error analyzing portfolio: {str(e)}")
+            logger.exception("Error analyzing portfolio")
             raise
 
     def plan_retirement(
@@ -99,7 +99,7 @@ class ClaudeClient:
             return response.content[0].text
 
         except Exception as e:
-            logger.error(f"Error planning retirement: {str(e)}")
+            logger.exception("Error planning retirement")
             raise
 
     def analyze_house_affordability(
@@ -143,7 +143,7 @@ class ClaudeClient:
             return response.content[0].text
 
         except Exception as e:
-            logger.error(f"Error analyzing house affordability: {str(e)}")
+            logger.exception("Error analyzing house affordability")
             raise
 
     def plan_family_costs(
@@ -184,7 +184,7 @@ class ClaudeClient:
             return response.content[0].text
 
         except Exception as e:
-            logger.error(f"Error planning family costs: {str(e)}")
+            logger.exception("Error planning family costs")
             raise
 
     def categorize_transactions(
@@ -219,7 +219,7 @@ class ClaudeClient:
             return categorized
 
         except Exception as e:
-            logger.error(f"Error categorizing transactions: {str(e)}")
+            logger.exception("Error categorizing transactions")
             raise
 
     async def stream_analysis(
@@ -245,7 +245,7 @@ class ClaudeClient:
                     yield text
 
         except Exception as e:
-            logger.error(f"Error streaming analysis: {str(e)}")
+            logger.exception("Error streaming analysis")
             raise
 
     def _build_portfolio_prompt(

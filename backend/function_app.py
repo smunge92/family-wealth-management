@@ -6,8 +6,9 @@ Main entry point for all Azure Functions using v2 programming model
 import azure.functions as func
 import logging
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Configure centralized logging with Application Insights
+from shared.logging_config import setup_logging
+setup_logging()
 logger = logging.getLogger(__name__)
 
 # Initialize the function app

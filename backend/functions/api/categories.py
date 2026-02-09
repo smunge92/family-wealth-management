@@ -11,6 +11,7 @@ import re
 from shared.database import get_db_manager
 from shared.auth import require_auth, get_cors_headers, validate_user_access
 from shared.rate_limiter import rate_limit
+from shared.logging_config import generate_correlation_id
 from shared.validation import validate_user_id, validate_string
 
 # Hex color pattern: # followed by exactly 6 hex digits
@@ -109,9 +110,10 @@ async def _get_categories(req: func.HttpRequest, headers: dict) -> func.HttpResp
         )
 
     except Exception as e:
-        logger.error(f"Error getting categories: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error getting categories [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to retrieve categories. Please try again."}),
+            json.dumps({"error": "Failed to retrieve categories. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -194,7 +196,7 @@ async def _create_category(req: func.HttpRequest, headers: dict) -> func.HttpRes
 
     except Exception as e:
         error_str = str(e)
-        logger.error(f"Error creating category: {error_str}")
+        logger.exception("Error creating category")
 
         # Check for unique constraint violation
         if "UQ_category_name_user" in error_str or "duplicate" in error_str.lower():
@@ -205,8 +207,9 @@ async def _create_category(req: func.HttpRequest, headers: dict) -> func.HttpRes
                 headers=headers
             )
 
+        correlation_id = generate_correlation_id()
         return func.HttpResponse(
-            json.dumps({"error": "Failed to create category. Please try again."}),
+            json.dumps({"error": "Failed to create category. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -355,7 +358,7 @@ async def _update_category(req: func.HttpRequest, headers: dict, category_id: in
 
     except Exception as e:
         error_str = str(e)
-        logger.error(f"Error updating category: {error_str}")
+        logger.exception("Error updating category")
 
         if "UQ_category_name_user" in error_str or "duplicate" in error_str.lower():
             return func.HttpResponse(
@@ -365,8 +368,9 @@ async def _update_category(req: func.HttpRequest, headers: dict, category_id: in
                 headers=headers
             )
 
+        correlation_id = generate_correlation_id()
         return func.HttpResponse(
-            json.dumps({"error": "Failed to update category. Please try again."}),
+            json.dumps({"error": "Failed to update category. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -418,9 +422,10 @@ async def _delete_category(req: func.HttpRequest, headers: dict, category_id: in
         )
 
     except Exception as e:
-        logger.error(f"Error deleting category: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error deleting category [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to delete category. Please try again."}),
+            json.dumps({"error": "Failed to delete category. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -517,9 +522,10 @@ async def _get_category_rules(req: func.HttpRequest, headers: dict) -> func.Http
         )
 
     except Exception as e:
-        logger.error(f"Error getting category rules: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error getting category rules [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to retrieve category rules. Please try again."}),
+            json.dumps({"error": "Failed to retrieve category rules. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -623,7 +629,7 @@ async def _create_category_rule(req: func.HttpRequest, headers: dict) -> func.Ht
 
     except Exception as e:
         error_str = str(e)
-        logger.error(f"Error creating category rule: {error_str}")
+        logger.exception("Error creating category rule")
 
         # Check for unique constraint violation
         if "UQ_rule_user_match" in error_str or "duplicate" in error_str.lower():
@@ -634,8 +640,9 @@ async def _create_category_rule(req: func.HttpRequest, headers: dict) -> func.Ht
                 headers=headers
             )
 
+        correlation_id = generate_correlation_id()
         return func.HttpResponse(
-            json.dumps({"error": "Failed to create category rule. Please try again."}),
+            json.dumps({"error": "Failed to create category rule. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -720,9 +727,10 @@ async def delete_category_rule(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        logger.error(f"Error deleting category rule: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error deleting category rule [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to delete category rule. Please try again."}),
+            json.dumps({"error": "Failed to delete category rule. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -880,9 +888,10 @@ async def update_transaction_category(req: func.HttpRequest) -> func.HttpRespons
         )
 
     except Exception as e:
-        logger.error(f"Error updating transaction category: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error updating transaction category [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to update transaction category. Please try again."}),
+            json.dumps({"error": "Failed to update transaction category. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -948,9 +957,10 @@ async def get_similar_transaction_count(req: func.HttpRequest) -> func.HttpRespo
         )
 
     except Exception as e:
-        logger.error(f"Error getting similar transaction count: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error getting similar transaction count [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to count similar transactions. Please try again."}),
+            json.dumps({"error": "Failed to count similar transactions. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers

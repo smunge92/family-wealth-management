@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCategories } from '../../context/CategoriesContext';
+import { useToast } from '../common/Toast';
 import { Category, CategoryRule } from '../../types/categories';
 import './CategoryManager.css';
 
@@ -36,6 +37,7 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ isOpen, onClose }) =>
     deleteRule,
     loading
   } = useCategories();
+  const { addToast } = useToast();
 
   const [activeTab, setActiveTab] = useState<Tab>('categories');
   const [showAddCategory, setShowAddCategory] = useState(false);
@@ -66,7 +68,7 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ isOpen, onClose }) =>
       await createCategory(categoryName.trim(), categoryIcon || undefined, categoryColor);
       resetForm();
     } catch (error: any) {
-      alert(error.message || 'Failed to create category');
+      addToast({ type: 'error', title: error.message || 'Failed to create category' });
     } finally {
       setSaving(false);
     }
@@ -92,7 +94,7 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ isOpen, onClose }) =>
       });
       resetForm();
     } catch (error: any) {
-      alert(error.message || 'Failed to update category');
+      addToast({ type: 'error', title: error.message || 'Failed to update category' });
     } finally {
       setSaving(false);
     }
@@ -110,7 +112,7 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ isOpen, onClose }) =>
       }
       setDeleteConfirm(null);
     } catch (error: any) {
-      alert(error.message || 'Failed to delete');
+      addToast({ type: 'error', title: error.message || 'Failed to delete' });
     } finally {
       setDeleting(false);
     }

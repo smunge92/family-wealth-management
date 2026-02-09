@@ -153,10 +153,7 @@ const FinancialInsights: React.FC = () => {
         ...familyMemberData,
         ...additionalData
       };
-      console.log('Sending request to', endpoint, 'with data:', requestData);
-
       const response = await api.post(endpoint, requestData);
-      console.log('Received response:', response.data);
 
       setAnalysis(response.data.analysis);
 
@@ -182,10 +179,6 @@ const FinancialInsights: React.FC = () => {
           setMonteCarloData(response.data.monte_carlo);
         }
       } else if (type === 'house' && response.data.calculations) {
-        console.log('House calculations received:', response.data.calculations);
-        console.log('Max Home Price:', response.data.calculations.max_home_price);
-        console.log('Max Monthly Payment:', response.data.calculations.max_monthly_payment);
-        console.log('Debug info:', response.data.debug);
         setChartData({
           type: 'house',
           calculations: response.data.calculations,
@@ -454,9 +447,6 @@ const FinancialInsights: React.FC = () => {
             <button
               className="button-3d button-maroon"
               onClick={() => {
-                console.log('House form values being sent:', houseForm);
-                console.log('annual_income:', houseForm.annual_income, 'type:', typeof houseForm.annual_income);
-                console.log('down_payment_percent:', houseForm.down_payment_percent, 'type:', typeof houseForm.down_payment_percent);
                 if (houseForm.annual_income < 1000) {
                   setError('Please enter a valid annual income (at least $1,000)');
                   return;

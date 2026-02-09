@@ -84,7 +84,6 @@ const ConnectAccount: React.FC<ConnectAccountProps> = ({ onSuccess, onExit }) =>
   // Handle successful account connection
   const handleOnSuccess = useCallback(
     async (publicToken: string, metadata: any) => {
-      console.log('Plaid Link success:', metadata);
       setLoading(true);
       setError(null);
 
@@ -96,8 +95,6 @@ const ConnectAccount: React.FC<ConnectAccountProps> = ({ onSuccess, onExit }) =>
           user_name: user?.name || '',
           family_member_id: selectedFamilyMemberId,
         });
-
-        console.log('Token exchanged and accounts saved:', response.data);
 
         if (onSuccess) {
           onSuccess(response.data.accounts);

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useFamilyMember, FamilyMember } from '../../../context/FamilyMemberContext';
+import { useToast } from '../Toast';
 import './FamilyMemberFilter.css';
 
 const FamilyMemberFilter: React.FC = () => {
@@ -11,6 +12,7 @@ const FamilyMemberFilter: React.FC = () => {
     deleteFamilyMember,
     loading
   } = useFamilyMember();
+  const { addToast } = useToast();
 
   const [isOpen, setIsOpen] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<FamilyMember | null>(null);
@@ -47,8 +49,7 @@ const FamilyMemberFilter: React.FC = () => {
       setDeleteConfirm(null);
       setIsOpen(false);
     } catch (error) {
-      console.error('Error deleting family member:', error);
-      alert('Failed to delete family member. Please try again.');
+      addToast({ type: 'error', title: 'Failed to delete family member. Please try again.' });
     } finally {
       setDeleting(false);
     }

@@ -14,6 +14,7 @@ import requests
 from typing import Dict, Optional
 from shared.database import DatabaseManager
 from shared.auth import get_cors_headers
+from shared.logging_config import generate_correlation_id
 
 logger = logging.getLogger(__name__)
 bp = func.Blueprint()
@@ -96,7 +97,7 @@ def get_plaid_webhook_verification_key(key_id: str) -> Optional[dict]:
         return None
 
     except Exception as e:
-        logger.error(f"Error fetching webhook verification key: {str(e)}")
+        logger.exception("Error fetching webhook verification key")
         return None
 
 
@@ -171,7 +172,7 @@ def verify_plaid_webhook_signature(body: bytes, signature: str, webhook_id: str)
         logger.warning(f"Invalid webhook JWT: {str(e)}")
         return False
     except Exception as e:
-        logger.error(f"Signature verification error: {str(e)}")
+        logger.exception("Signature verification error")
         return False
 
 
@@ -238,7 +239,7 @@ def handle_transactions_webhook(webhook_code: str, item_id: str, payload: dict) 
 
             return {"status": "success", "accounts_marked": len(accounts)}
         except Exception as e:
-            logger.error(f"Error processing SYNC_UPDATES_AVAILABLE: {str(e)}")
+            logger.exception("Error processing SYNC_UPDATES_AVAILABLE")
             return {"status": "error", "message": "Failed to process sync update"}
 
     elif webhook_code == "TRANSACTIONS_REMOVED":
@@ -254,7 +255,7 @@ def handle_transactions_webhook(webhook_code: str, item_id: str, payload: dict) 
                 )
             return {"status": "success", "transactions_removed": len(removed_transactions)}
         except Exception as e:
-            logger.error(f"Error removing transactions: {str(e)}")
+            logger.exception("Error removing transactions")
             return {"status": "error", "message": "Failed to remove transactions"}
 
     elif webhook_code == "INITIAL_UPDATE":
@@ -304,7 +305,7 @@ def handle_item_webhook(webhook_code: str, item_id: str, payload: dict) -> dict:
             )
             return {"status": "success", "message": "Item error recorded"}
         except Exception as e:
-            logger.error(f"Error updating item status: {str(e)}")
+            logger.exception("Error updating item status")
             return {"status": "error", "message": "Failed to update item status"}
 
     elif webhook_code == "PENDING_EXPIRATION":
@@ -323,7 +324,7 @@ def handle_item_webhook(webhook_code: str, item_id: str, payload: dict) -> dict:
             )
             return {"status": "success", "message": "Expiration warning recorded"}
         except Exception as e:
-            logger.error(f"Error recording expiration: {str(e)}")
+            logger.exception("Error recording expiration")
             return {"status": "error", "message": "Failed to record expiration"}
 
     elif webhook_code == "LOGIN_REQUIRED":
@@ -341,7 +342,7 @@ def handle_item_webhook(webhook_code: str, item_id: str, payload: dict) -> dict:
             )
             return {"status": "success", "message": "Re-authentication required"}
         except Exception as e:
-            logger.error(f"Error updating reauth status: {str(e)}")
+            logger.exception("Error updating reauth status")
             return {"status": "error", "message": "Failed to update reauth status"}
 
     elif webhook_code == "WEBHOOK_UPDATE_ACKNOWLEDGED":
@@ -376,7 +377,7 @@ def plaid_webhook_handler(req: func.HttpRequest) -> func.HttpResponse:
             body = req.get_body()
             payload = json.loads(body)
         except (ValueError, json.JSONDecodeError) as e:
-            logger.error(f"Invalid webhook payload: {str(e)}")
+            logger.exception("Invalid webhook payload")
             return func.HttpResponse(
                 json.dumps({"error": "Invalid request body"}),
                 status_code=400,
@@ -447,10 +448,11 @@ def plaid_webhook_handler(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        logger.error(f"Webhook processing error: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Webhook processing error [correlation_id={correlation_id}]")
         # Return 200 to prevent Plaid from retrying (we've logged the error)
         return func.HttpResponse(
-            json.dumps({"status": "error", "message": "Internal processing error"}),
+            json.dumps({"status": "error", "message": "Internal processing error", "correlation_id": correlation_id}),
             status_code=200,
             headers=headers,
             mimetype="application/json"

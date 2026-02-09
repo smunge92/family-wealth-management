@@ -78,7 +78,7 @@ class TransactionParser:
             return transactions
 
         except Exception as e:
-            logger.error(f"Error parsing CSV: {str(e)}")
+            logger.exception("Error parsing CSV")
             raise
 
     def _parse_ofx(self, file_content: bytes, account_id: str) -> List[Dict]:
@@ -103,7 +103,7 @@ class TransactionParser:
             return transactions
 
         except Exception as e:
-            logger.error(f"Error parsing OFX: {str(e)}")
+            logger.exception("Error parsing OFX")
             raise
 
     def _parse_excel(self, file_content: bytes, account_id: str) -> List[Dict]:
@@ -134,7 +134,7 @@ class TransactionParser:
             return transactions
 
         except Exception as e:
-            logger.error(f"Error parsing Excel: {str(e)}")
+            logger.exception("Error parsing Excel")
             raise
 
     def _identify_columns_with_claude(self, header_sample: str) -> Dict[str, str]:
@@ -174,7 +174,7 @@ File sample:
             return mapping
 
         except Exception as e:
-            logger.error(f"Error identifying columns: {str(e)}")
+            logger.exception("Error identifying columns")
             # Fallback to common column names
             return {
                 "date": "Date",
@@ -280,7 +280,7 @@ File sample:
             return categorized_transactions
 
         except Exception as e:
-            logger.error(f"Error categorizing transactions: {str(e)}")
+            logger.exception("Error categorizing transactions")
             # Return original transactions without categories
             return transactions
 

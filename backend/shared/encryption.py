@@ -116,7 +116,7 @@ class EncryptionService:
             return f"enc:{ENCRYPTION_VERSION}:{encrypted_data}"
 
         except Exception as e:
-            logger.error(f"Encryption failed: {str(e)}")
+            logger.exception("Encryption failed")
             raise EncryptionError(f"Failed to encrypt data: {str(e)}")
 
     def decrypt(self, encrypted_text: str) -> Optional[str]:
@@ -159,7 +159,7 @@ class EncryptionService:
                 return self._decrypt_v1(parts[1] if len(parts) > 1 else "")
 
         except Exception as e:
-            logger.error(f"Decryption failed: {str(e)}")
+            logger.exception("Decryption failed")
             raise EncryptionError(f"Failed to decrypt data: {str(e)}")
 
     def _decrypt_v1(self, encrypted_data: str) -> str:

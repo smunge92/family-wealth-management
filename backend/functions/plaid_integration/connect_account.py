@@ -13,6 +13,7 @@ from shared.auth import require_auth, get_cors_headers, validate_user_access, ge
 from shared.rate_limiter import rate_limit
 from shared.validation import validate_user_id, validate_email, validate_string, validate_plaid_token
 from shared.audit import audit_log, audit_access, AuditAction
+from shared.logging_config import generate_correlation_id
 
 logger = logging.getLogger(__name__)
 
@@ -86,9 +87,10 @@ async def create_link_token(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        logger.error(f"Error creating link token: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error creating link token [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to create link token. Please try again."}),
+            json.dumps({"error": "Failed to create link token. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -239,9 +241,10 @@ async def exchange_public_token(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        logger.error(f"Error exchanging token: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error exchanging token [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to connect account. Please try again."}),
+            json.dumps({"error": "Failed to connect account. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -330,9 +333,10 @@ async def get_accounts(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        logger.error(f"Error getting accounts: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error getting accounts [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to retrieve accounts. Please try again."}),
+            json.dumps({"error": "Failed to retrieve accounts. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -428,9 +432,10 @@ async def update_account_family_member(req: func.HttpRequest) -> func.HttpRespon
         )
 
     except Exception as e:
-        logger.error(f"Error updating account family member: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error updating account family member [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to update account. Please try again."}),
+            json.dumps({"error": "Failed to update account. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -531,9 +536,10 @@ async def delete_account(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        logger.error(f"Error deleting account: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error deleting account [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to delete account. Please try again."}),
+            json.dumps({"error": "Failed to delete account. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers

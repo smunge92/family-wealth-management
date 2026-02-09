@@ -8,6 +8,11 @@ import { msalConfig } from './services/auth';
 import { ToastProvider, ToastContainer } from './components/common/Toast';
 import { FamilyMemberProvider } from './context/FamilyMemberContext';
 import { CategoriesProvider } from './context/CategoriesContext';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+import { initializeLogger } from './services/logger';
+
+// Initialize centralized logger and Application Insights
+initializeLogger();
 
 // Initialize MSAL instance
 const msalInstance = new PublicClientApplication(msalConfig);
@@ -43,16 +48,18 @@ msalInstance.initialize().then(() => {
 
   root.render(
     <React.StrictMode>
-      <MsalProvider instance={msalInstance}>
-        <ToastProvider>
-          <FamilyMemberProvider>
-            <CategoriesProvider>
-              <App />
-              <ToastContainer />
-            </CategoriesProvider>
-          </FamilyMemberProvider>
-        </ToastProvider>
-      </MsalProvider>
+      <ErrorBoundary>
+        <MsalProvider instance={msalInstance}>
+          <ToastProvider>
+            <FamilyMemberProvider>
+              <CategoriesProvider>
+                <App />
+                <ToastContainer />
+              </CategoriesProvider>
+            </FamilyMemberProvider>
+          </ToastProvider>
+        </MsalProvider>
+      </ErrorBoundary>
     </React.StrictMode>
   );
 });

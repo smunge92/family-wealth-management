@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useCategories } from '../../../context/CategoriesContext';
+import { useToast } from '../Toast';
 import { Category, CategorySource } from '../../../types/categories';
 import './CategorySelect.css';
 
@@ -29,6 +30,7 @@ const CategorySelect: React.FC<CategorySelectProps> = ({
     updateTransactionCategory,
     getSimilarCount
   } = useCategories();
+  const { addToast } = useToast();
 
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -87,8 +89,7 @@ const CategorySelect: React.FC<CategorySelectProps> = ({
         onCategoryChange();
       }
     } catch (error) {
-      console.error('Error updating category:', error);
-      alert('Failed to update category. Please try again.');
+      addToast({ type: 'error', title: 'Failed to update category. Please try again.' });
     } finally {
       setLoading(false);
     }

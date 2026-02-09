@@ -93,7 +93,7 @@ class DataRetentionManager:
                 return {"transactions_deleted": count}
 
         except Exception as e:
-            logger.error(f"Error cleaning up old transactions: {e}")
+            logger.exception("Error cleaning up old transactions")
             raise
 
     def cleanup_old_audit_logs(self, older_than_days: Optional[int] = None) -> Dict:
@@ -149,7 +149,7 @@ class DataRetentionManager:
                 return {"audit_logs_deleted": count}
 
         except Exception as e:
-            logger.error(f"Error cleaning up old audit logs: {e}")
+            logger.exception("Error cleaning up old audit logs")
             raise
 
     def delete_user_data(self, user_id: str, include_audit_logs: bool = False) -> Dict:
@@ -258,7 +258,7 @@ class DataRetentionManager:
             return stats
 
         except Exception as e:
-            logger.error(f"Error during GDPR delete for user {user_id}: {e}")
+            logger.exception(f"Error during GDPR delete for user {user_id}")
             raise
 
     def export_user_data(self, user_id: str) -> Dict:
@@ -329,7 +329,7 @@ class DataRetentionManager:
             return export_data
 
         except Exception as e:
-            logger.error(f"Error exporting data for user {user_id}: {e}")
+            logger.exception(f"Error exporting data for user {user_id}")
             raise
 
     def _serialize_datetimes(self, obj):

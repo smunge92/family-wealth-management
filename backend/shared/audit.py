@@ -166,7 +166,7 @@ class AuditLogger:
                 conn.commit()
         except Exception as e:
             # Don't fail the request if audit logging fails
-            logger.error(f"Failed to write audit log to database: {e}")
+            logger.exception("Failed to write audit log to database")
 
     def log_access(
         self,

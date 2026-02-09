@@ -192,10 +192,10 @@ class AuthService:
             logger.error("Token has expired")
             return None
         except jwt.InvalidTokenError as e:
-            logger.error(f"Invalid token: {str(e)}")
+            logger.exception("Invalid token")
             return None
         except Exception as e:
-            logger.error(f"Error validating token: {str(e)}")
+            logger.exception("Error validating token")
             return None
 
     def extract_user_info(self, token_payload: Dict) -> Dict:
@@ -293,7 +293,7 @@ def require_auth(f: Callable) -> Callable:
                 else:
                     req.user_info = None
             except Exception as e:
-                logger.error(f"Token validation error: {str(e)}")
+                logger.exception("Token validation error")
                 if auth_required:
                     return func.HttpResponse(
                         json.dumps({"error": "Authentication failed"}),
@@ -365,7 +365,7 @@ def require_auth(f: Callable) -> Callable:
                 else:
                     req.user_info = None
             except Exception as e:
-                logger.error(f"Token validation error: {str(e)}")
+                logger.exception("Token validation error")
                 if auth_required:
                     return func.HttpResponse(
                         json.dumps({"error": "Authentication failed"}),

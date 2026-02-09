@@ -12,6 +12,7 @@ from shared.plaid_client import PlaidClient
 from shared.database import get_db_manager
 from shared.auth import require_auth, get_cors_headers, validate_user_access
 from shared.rate_limiter import rate_limit
+from shared.logging_config import generate_correlation_id
 
 logger = logging.getLogger(__name__)
 
@@ -208,7 +209,7 @@ async def sync_transactions(req: func.HttpRequest) -> func.HttpResponse:
                                 account_added += 1
                                 total_added += 1
                     except Exception as hist_err:
-                        logger.warning(f"Historical pull also failed: {str(hist_err)}")
+                        logger.exception("Historical pull also failed")
 
                 synced_accounts.append({
                     "account_id": account_id,
@@ -222,7 +223,7 @@ async def sync_transactions(req: func.HttpRequest) -> func.HttpResponse:
                 logger.info(f"Synced account {account_id}: +{account_added}, ~{account_modified}, -{account_removed}")
 
             except Exception as e:
-                logger.error(f"Error syncing account {account_id}: {str(e)}")
+                logger.exception(f"Error syncing account {account_id}")
                 synced_accounts.append({
                     "account_id": account_id,
                     "account_name": account.get("account_name"),
@@ -243,9 +244,10 @@ async def sync_transactions(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        logger.error(f"Error syncing transactions: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error syncing transactions [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "An error occurred. Please try again."}),
+            json.dumps({"error": "An error occurred. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -359,9 +361,10 @@ async def sync_historical_transactions(req: func.HttpRequest) -> func.HttpRespon
         )
 
     except Exception as e:
-        logger.error(f"Error syncing historical transactions: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error syncing historical transactions [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "An error occurred. Please try again."}),
+            json.dumps({"error": "An error occurred. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -463,9 +466,10 @@ async def get_transactions(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        logger.error(f"Error getting transactions: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error getting transactions [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "An error occurred. Please try again."}),
+            json.dumps({"error": "An error occurred. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers

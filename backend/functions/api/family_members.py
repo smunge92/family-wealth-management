@@ -11,6 +11,7 @@ from shared.database import get_db_manager
 from shared.auth import require_auth, get_cors_headers, validate_user_access, get_user_from_request
 from shared.rate_limiter import rate_limit
 from shared.validation import validate_user_id, validate_string, validate_email
+from shared.logging_config import generate_correlation_id
 
 logger = logging.getLogger(__name__)
 
@@ -103,9 +104,10 @@ async def _get_family_members(req: func.HttpRequest, headers: dict) -> func.Http
         )
 
     except Exception as e:
-        logger.error(f"Error getting family members: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error getting family members [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to retrieve family members. Please try again."}),
+            json.dumps({"error": "Failed to retrieve family members. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -228,7 +230,7 @@ async def _create_family_member(req: func.HttpRequest, headers: dict) -> func.Ht
 
     except Exception as e:
         error_str = str(e)
-        logger.error(f"Error creating family member: {error_str}")
+        logger.exception("Error creating family member")
 
         # Check for unique constraint violation
         if "UQ_family_member_name" in error_str or "duplicate" in error_str.lower():
@@ -252,8 +254,9 @@ async def _create_family_member(req: func.HttpRequest, headers: dict) -> func.Ht
                 headers=headers
             )
 
+        correlation_id = generate_correlation_id()
         return func.HttpResponse(
-            json.dumps({"error": "Failed to create family member. Please try again."}),
+            json.dumps({"error": "Failed to create family member. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers
@@ -345,9 +348,10 @@ async def delete_family_member(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as e:
-        logger.error(f"Error deleting family member: {str(e)}")
+        correlation_id = generate_correlation_id()
+        logger.exception(f"Error deleting family member [correlation_id={correlation_id}]")
         return func.HttpResponse(
-            json.dumps({"error": "Failed to delete family member. Please try again."}),
+            json.dumps({"error": "Failed to delete family member. Please try again.", "correlation_id": correlation_id}),
             status_code=500,
             mimetype="application/json",
             headers=headers

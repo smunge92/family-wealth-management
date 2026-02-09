@@ -90,7 +90,7 @@ class PlaidClient:
             }
 
         except ApiException as e:
-            logger.error(f"Error creating link token: {str(e)}")
+            logger.exception("Error creating link token")
             raise
 
     def exchange_public_token(self, public_token: str) -> Dict:
@@ -113,7 +113,7 @@ class PlaidClient:
             }
 
         except ApiException as e:
-            logger.error(f"Error exchanging public token: {str(e)}")
+            logger.exception("Error exchanging public token")
             raise
 
     def get_accounts(self, access_token: str) -> List[Dict]:
@@ -148,7 +148,7 @@ class PlaidClient:
             return accounts
 
         except ApiException as e:
-            logger.error(f"Error getting accounts: {str(e)}")
+            logger.exception("Error getting accounts")
             raise
 
     def get_transactions(
@@ -219,7 +219,7 @@ class PlaidClient:
             return all_transactions
 
         except ApiException as e:
-            logger.error(f"Error getting transactions: {str(e)}")
+            logger.exception("Error getting transactions")
             raise
 
     def get_historical_transactions(
@@ -269,7 +269,7 @@ class PlaidClient:
             }
 
         except ApiException as e:
-            logger.error(f"Error getting institution info: {str(e)}")
+            logger.exception("Error getting institution info")
             raise
 
     def sync_transactions(self, access_token: str, cursor: Optional[str] = None) -> Dict:
@@ -304,7 +304,7 @@ class PlaidClient:
             }
 
         except ApiException as e:
-            logger.error(f"Error syncing transactions: {str(e)}")
+            logger.exception("Error syncing transactions")
             raise
 
     def _format_transaction(self, txn: Dict) -> Dict:
@@ -355,7 +355,7 @@ class PlaidClient:
             }
 
         except ApiException as e:
-            logger.error(f"Error rotating access token: {str(e)}")
+            logger.exception("Error rotating access token")
             raise
 
     def get_item(self, access_token: str) -> Dict:
@@ -393,7 +393,7 @@ class PlaidClient:
             }
 
         except ApiException as e:
-            logger.error(f"Error getting item: {str(e)}")
+            logger.exception("Error getting item")
             raise
 
     def remove_item(self, access_token: str) -> bool:
@@ -419,7 +419,7 @@ class PlaidClient:
             return True
 
         except ApiException as e:
-            logger.error(f"Error removing item: {str(e)}")
+            logger.exception("Error removing item")
             raise
 
 
