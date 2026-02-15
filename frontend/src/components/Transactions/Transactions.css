@@ -540,8 +540,13 @@
 }
 
 .transaction-row-3d.pending {
-  opacity: 0.7;
   background: linear-gradient(145deg, #fffbf0, #fff8e6);
+}
+
+.transaction-row-3d.pending .transaction-icon-wrapper-3d,
+.transaction-row-3d.pending .transaction-info-3d,
+.transaction-row-3d.pending .transaction-amount-wrapper-3d {
+  opacity: 0.7;
 }
 
 .transaction-icon-wrapper-3d {
