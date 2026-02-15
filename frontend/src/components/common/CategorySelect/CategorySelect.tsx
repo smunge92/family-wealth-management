@@ -27,6 +27,9 @@ const CategorySelect: React.FC<CategorySelectProps> = ({
 }) => {
   const {
     categories,
+    loading: categoriesLoading,
+    error: categoriesError,
+    fetchCategories,
     updateTransactionCategory,
     getSimilarCount
   } = useCategories();
@@ -142,7 +145,13 @@ const CategorySelect: React.FC<CategorySelectProps> = ({
     <div className="category-select" ref={dropdownRef}>
       <button
         className="category-select-button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          const opening = !isOpen;
+          setIsOpen(opening);
+          if (opening && categories.length === 0) {
+            fetchCategories();
+          }
+        }}
         style={{ borderColor: displayCategory.color || undefined }}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
@@ -160,6 +169,17 @@ const CategorySelect: React.FC<CategorySelectProps> = ({
       {isOpen && (
         <div className="category-dropdown" role="listbox">
           <div className="category-dropdown-header">Select Category</div>
+
+          {categoriesLoading && categories.length === 0 && (
+            <div className="category-dropdown-status">Loading categories...</div>
+          )}
+
+          {!categoriesLoading && categoriesError && categories.length === 0 && (
+            <div className="category-dropdown-status">
+              <span>Failed to load categories.</span>
+              <button className="category-retry-btn" onClick={() => fetchCategories()}>Retry</button>
+            </div>
+          )}
 
           {systemCategories.map((category) => (
             <button
